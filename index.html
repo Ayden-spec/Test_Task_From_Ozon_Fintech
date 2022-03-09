@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Progress</title>
+    <link rel="stylesheet" href="./Progress.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <p class="Title">Progress</p>
+
+        <div class="progress no-round" style="--progress:0"></div>
+
+        <div>
+            <div class="control">
+                <input type="text" value="0" class="Normal">
+                <p>Value</p>
+            </div>
+
+            <div class="control">
+                <label class="switch">
+                    <input type="checkbox" onclick="ProgressAnimated(this.checked)">
+                    <span class="slider"></span>
+                </label>
+                <p>Animate</p>
+            </div>
+
+            <div class="control">
+                <label class="switch">
+                    <input type="checkbox" class="Hide" onclick="ProgressHide(this.checked)">
+                    <span class="slider"></span>
+                </label>
+                <p>Hide</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+<script>
+    let progress_element = document.querySelector('.progress');
+    let Normal = document.querySelector('.Normal');
+
+    function ProgressAnimated(check) { //input checkbox
+        if (check) {
+            progress_element.classList.add("animate");
+        } else {
+            progress_element.classList.remove("animate");
+        }
+    }
+
+    function ProgressHide(check) { //input checkbox
+        if (check) {
+            progress_element.style = 'opacity: 0;';
+        } else {
+            progress_element.style = 'opacity: 1;';
+            setProgress(Normal.value);
+        }
+    }
+
+    Normal.oninput = function () { //input text
+        if (Normal.value === '') {
+            Normal.value = 0;
+        }
+        if (Normal.value[0] == 0 && Normal.value.length > 1) {
+            Normal.value = Normal.value.slice(1);
+        }
+        if (Normal.value > 100) {
+            Normal.value = 100;
+        }
+        Normal.value = Normal.value.replace(/[^0-9]/g, "");
+
+        setProgress(Normal.value);
+    }
+
+    function setProgress(progress) {
+        progress_element.style = `--progress:${progress};`
+    }
+</script>
+
+</html>
